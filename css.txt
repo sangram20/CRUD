@@ -1,0 +1,59 @@
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 18px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+
+
+
+// Apply the age filter if selected
+if ($ageFilter != 'ALL') {
+    if ($ageFilter == '18-30') {
+        $sql .= " WHERE users.age BETWEEN 18 AND 30";
+    } elseif ($ageFilter == '31-50') {
+        $sql .= " WHERE users.age BETWEEN 31 AND 50";
+    } elseif ($ageFilter == '50-60') {
+        $sql .= " WHERE users.age BETWEEN 50 AND 60";
+    }
+}
+
+// Apply the search filter if an ID is provided
+if ($searchId !== '') {
+    // Append the condition for the search query
+    $sql .= ($ageFilter != 'ALL' ? " AND" : " WHERE") . " users.id = '$searchId'";
+}
+
+
+Dropdown filter form
+<form method="GET" action="">
+    <label for="age_filter">Filter by Age:</label>
+    <select name="age_filter" id="age_filter" onchange="this.form.submit()">
+        <option value="ALL" <?php echo ($ageFilter == 'ALL') ? 'selected' : ''; ?>>All</option>
+        <option value="18-30" <?php echo ($ageFilter == '18-30') ? 'selected' : ''; ?>>18-30</option>
+        <option value="31-50" <?php echo ($ageFilter == '31-50') ? 'selected' : ''; ?>>31-50</option>
+        <option value="50-60" <?php echo ($ageFilter == '50-60') ? 'selected' : ''; ?>>50-60</option>
+    </select>
+</form>
